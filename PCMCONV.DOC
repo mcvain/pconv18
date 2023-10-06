@@ -1,0 +1,132 @@
+
+		［汎用ＰＣＭコンバーター PCMCONV  ver1.8］
+					programmed by こうの　たけし
+
+	　主要なPCMフォーマットを相互にコンバートするプログラムです。
+
+・扱えるファイル
+
+	・YM2608のADPCM
+	・MSM6258のADPCM
+	・RF5C68のPCM
+	・MacintoshのPCM
+	・符号なし4bitPCM
+	・符号つき8bitPCM
+	・符号つき16bitPCM(ﾘﾄﾙｴﾝﾃﾞｨｱﾝ)
+	・符号つき16bitPCM(ﾋﾞｯｸﾞｴﾝﾃﾞｨｱﾝ)
+	・MS-Windowsの.wavファイル
+
+	　これらの中から任意のソースとディトネーションを選べます。
+
+
+・拡張子について
+
+	　このプログラムでは、各フォーマットと拡張子を以下のように一意的
+	に関連づけています。これは、異種フォーマット間のコンバート時の指
+	定を簡便にするためです。
+
+		.spb	YM2608(OPNA) のADPCM
+		.pcm	MSM6258(X68k)のADPCM
+		.snd	RF5C68(TOWNS)のPCM
+		.spk	Macintosh    のPCM
+		.spc	符号なし4bit のPCM
+		.pc8	符号つき8bit のPCM
+		.p16	符号つき16bitのPCM(ﾘﾄﾙｴﾝﾃﾞｨｱﾝ)
+		.phl	符号つき16bitのPCM(ﾋﾞｯｸﾞｴﾝﾃﾞｨｱﾝ)
+		.wav	MS-WindowsのWaveファイル
+
+
+・使用方法
+
+	usage:	PCMCONV [level][src opt.] src file [src freq.]
+			       [dst opt.][dst file][dst freq.]
+
+	・[level] は、音量を変えながらコンバートするときに使用します。
+	　指定は元の音量の1/256単位で行ないます。デフォルトは256です。
+
+	・ src file と [dst file] には、それぞれ元のPCMファイル、変換後
+	のPCMファイルのファイル名を書いて下さい。
+
+	・[src opt.] と [dst opt.] では、以下のオプションが使用できます。
+	この指定により、ファイルの拡張子が自動補完されます。
+
+		/x	PCMのタイプとして  M6258のADPCM  を指定する
+		/a	PCMのタイプとして  OPNA のADPCM  を指定する
+		/m	PCMのタイプとして MacintoshのPCM を指定する
+		/s	PCMのタイプとして  RF5C68 のPCM  を指定する
+		/n	PCMのタイプとして    4bitPCM     を指定する
+		/b	PCMのタイプとして    8bitPCM     を指定する
+		/w	PCMのタイプとして 16bitPCM(ﾘﾄﾙ)  を指定する
+		/h	PCMのタイプとして 16bitPCM(ﾋﾞｯｸﾞ)を指定する
+		/v	PCMのタイプとしてWaveフォーマットを指定する
+
+	・[src opt.] や [dst opt.] を指定しなかった場合、拡張子よりフォ
+	  ーマットタイプを推定します。
+
+	　拡張子の自動補完と、拡張子からのフォーマット推定の機能により、
+	以下の表記は全て同じ意味になります。
+
+		pcmconv /x AMI.PCM /a AMI.SPB
+		pcmconv /x AMI.PCM /a AMI
+		pcmconv /x AMI.PCM /a
+		pcmconv /x AMI.PCM AMI.SPB
+		pcmconv /x AMI /a AMI.SPB
+		pcmconv /x AMI /a AMI
+		pcmconv /x AMI /a
+		pcmconv /x AMI AMI.SPB
+		pcmconv AMI.PCM /a AMI.SPB
+		pcmconv AMI.PCM /a AMI
+		pcmconv AMI.PCM /a
+		pcmconv AMI.PCM AMI.SPB
+
+	　最低限ソース／ディストネーションの完全なファイル名が有れば、オ
+	プションを指定する必要はありません。ちょっとややこしいですが間違
+	いを避けるためには、
+		pcmconv /x AMI.PCM /a
+	ぐらいにしておいた方がいいでしょう。
+
+	・[src freq.] と [dst freq.] では、それぞれ元のPCMファイル、変換
+	後のPCMファイルのサンプリングレート／再生レートを指定してください。
+	範囲は1～65534です。
+
+	・出力側にFM-TOWNSのPCMやWaveファイル等を選択した場合、レートの指
+	定を省略するとヘッダに正しい値が書き込まれない事があります。ヘッ
+	ダありのフォーマットを出力する場合は、レート指定をつけるよう心が
+	けてください。
+
+
+・使用上の注意
+
+	　波形を100％再現できる可能性が高いのは、16bitPCMなどを出力フォー
+	マットとして選択した場合だけです。とくに、ADPCMフォーマットの変換
+	や、周波数、音量などの変換を繰り返すと音質が劣化します。
+
+
+・.wavファイルへの対応
+
+	　MS-Windowsで扱われるPCMデータへの対応は完全ではありません。
+
+	・ステレオのデータを扱えない
+	・モノラル8bitPCMしか書き出せない
+
+	などの制約があります。
+
+
+・その他
+
+	OPNAのADPCMは激しい波形の変化には追随しにくいです。
+	MSM6258のADPCMは激しい波形の変化には追随しやすいです。
+	MSM6258のADPCMは無音状態を作れません。かならずノイズが入ります。
+	2次圧縮の圧縮率はMSM6258のADPCMが一番小さくなるようです。
+
+	今のところ、このプログラムではモノラルのデータしか扱えていません。
+
+・謝辞
+
+	　デバッグをしていただいたKAJAさん、KUNIさん、EXCEEDさん、K-HAMさん
+	に深く感謝いたします。
+
+
+					東京ＢＢＳ	KONO
+
+
